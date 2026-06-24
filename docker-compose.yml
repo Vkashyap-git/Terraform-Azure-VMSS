@@ -1,0 +1,30 @@
+#cloud-config
+
+package_update: true
+
+runcmd:
+  - apt update
+  - apt install -y docker.io docker-compose jq
+
+  - systemctl enable docker
+  - systemctl start docker
+
+  - mkdir -p /opt/app
+  - cd /opt/app
+
+  - docker login myregistry.azurecr.io -u USERNAME -p PASSWORD
+
+  - docker pull myregistry.azurecr.io/backend:latest
+
+  - cat <<EOF > docker-compose.yml
+version: '3'
+
+services:
+  backend:
+    image: myregistry.azurecr.io/backend:latest
+    restart: always
+    ports:
+      - "80:8000"
+EOF
+
+  - docker-compose up -d

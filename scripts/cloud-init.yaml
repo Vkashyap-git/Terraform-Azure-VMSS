@@ -1,0 +1,14 @@
+#cloud-config
+
+package_update: true
+
+runcmd:
+  - apt update
+  - apt install -y docker.io docker-compose
+
+  - systemctl enable docker
+  - systemctl start docker
+
+  - docker pull ghcr.io/calance-us/poc-procore-adobe-integration-client:0.0.1-rc7  
+
+  - docker run -d -p 80:8000 ghcr.io/calance-us/poc-procore-adobe-integration-client:0.0.1-rc7
