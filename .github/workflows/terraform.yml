@@ -13,6 +13,14 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
 
+    env:
+      TF_VAR_location: ${{ vars.TF_VAR_LOCATION }}
+      TF_VAR_resource_group_name: ${{ vars.TF_VAR_RESOURCE_GROUP_NAME }}
+      TF_VAR_admin_username: ${{ vars.TF_VAR_ADMIN_USERNAME }}
+      TF_VAR_ssh_public_key: ${{ vars.TF_VAR_SSH_PUBLIC_KEY }}
+      TF_VAR_ghcr_username: ${{ vars.TF_VAR_GHCR_USERNAME }}
+      TF_VAR_ghcr_token: ${{ secrets.TF_VAR_GHCR_TOKEN }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
